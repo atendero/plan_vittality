@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Nutricional Vitalitty - Alfredo Tendero</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        vitalitty: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                            dark: '#0f172a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .tab-active {
+            border-bottom: 3px solid #0284c7;
+            color: #0284c7;
+            font-weight: 700;
+        }
+        .modal-backdrop {
+            background-color: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(5px);
+        }
+        .water-tracker > summary { list-style: none; }
+        .water-tracker > summary::-webkit-details-marker { display: none; }
+        .water-tracker[open] .water-tracker-chevron { transform: rotate(180deg); }
+        @media (max-width: 639px) {
+            #headerTopbar {
+                position: relative;
+                flex-wrap: nowrap;
+                align-items: flex-start;
+            }
+            #headerBrand {
+                flex: 1 1 auto;
+                min-width: 0;
+                padding-right: 3.5rem;
+            }
+            #headerBrand > div:last-child { min-width: 0; }
+            #headerBrand h1 { flex-wrap: wrap; }
+            #headerBrand p { line-height: 1.35; }
+            #mobileActionControls {
+                position: absolute;
+                top: 0.75rem;
+                right: 1rem;
+                z-index: 45;
+            }
+            #headerActions {
+                display: none;
+                position: absolute;
+                top: calc(100% + 0.5rem);
+                right: 0;
+                z-index: 40;
+                width: calc(100vw - 2rem);
+                max-width: 20rem;
+                box-sizing: border-box;
+                max-height: calc(100vh - 6rem);
+                max-height: calc(100dvh - 6rem);
+                overflow-y: auto;
+                padding: 0.75rem;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.5rem;
+                border: 1px solid #334155;
+                border-radius: 0.875rem;
+                background: #0f172a;
+                box-shadow: 0 18px 35px rgba(15, 23, 42, 0.3);
+            }
+            #headerActions.is-open { display: flex; }
+            #headerActions > button { width: 100%; min-height: 2.5rem; justify-content: flex-start; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <header class="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-30 shadow-md">
+        <div id="headerTopbar" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap justify-between items-center gap-4">
+            <div id="headerBrand" class="flex items-center space-x-3">
+                <div class="w-10 h-10 min-w-10 min-h-10 shrink-0 rounded-xl bg-white flex items-center justify-center shadow-lg shadow-sky-500/20 overflow-hidden">
+                    <img src="data:image/png;base64,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" alt="Logotipo Vitalitty" width="40" height="40" class="w-full h-full object-contain shrink-0">
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-tight text-white flex items-center gap-2">
+                        VITALITTY <span class="text-xs bg-sky-500/20 text-sky-400 font-medium px-2 py-0.5 rounded-full border border-sky-500/30">2800 - 3200 kcal</span>
+                    </h1>
+                    <p class="text-xs text-slate-400">Alfredo Tendero Casanova • Próxima Revisión: 19 de Octubre 2026</p>
+                </div>
+            </div>
+
+            <!-- CLOUD SYNC & CONTROLS -->
+            <div id="mobileActionControls" class="relative flex items-center gap-2 sm:gap-3">
+                <button id="mobileActionsToggle" type="button" onclick="toggleHeaderActions()" aria-controls="headerActions" aria-expanded="false" aria-label="Abrir menú de acciones" class="sm:hidden w-10 h-10 rounded-xl border border-slate-700 bg-slate-800 hover:bg-slate-700 text-sky-300 flex items-center justify-center transition">
+                    <i class="fa-solid fa-ellipsis-vertical text-lg"></i>
+                </button>
+                <div id="headerActions" class="flex flex-wrap items-center justify-start sm:justify-end gap-2 sm:gap-3">
+                <button onclick="openSyncModal()" id="syncBadge" class="shrink-0 whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-xs px-3 py-1.5 rounded-lg border border-slate-700 transition flex items-center gap-2" title="Configurar sincronización en la nube">
+                    <span id="syncDot" class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span id="syncStatusText" class="text-emerald-400 font-medium">Nube Activa</span>
+                </button>
+
+                <button onclick="triggerManualSync()" class="shrink-0 whitespace-nowrap bg-emerald-600 hover:bg-emerald-500 text-white text-xs px-3 py-2 rounded-lg font-semibold shadow transition flex items-center gap-1.5" title="Sincronizar datos ahora">
+                    <i class="fa-solid fa-rotate"></i> Sincronizar
+                </button>
+                <button onclick="exportJSONData()" class="shrink-0 whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs px-3 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5" title="Guardar copia JSON">
+                    <i class="fa-solid fa-download text-sky-400"></i> Backup
+                </button>
+                <button onclick="openPdfImport()" class="shrink-0 whitespace-nowrap bg-violet-600 hover:bg-violet-500 text-white text-xs px-3 py-2 rounded-lg font-semibold shadow transition flex items-center gap-1.5" title="Actualizar el plan desde un PDF">
+                    <i class="fa-solid fa-file-pdf"></i> Actualizar desde PDF
+                </button>
+                <button onclick="checkAndPromptReset(true)" class="shrink-0 whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs px-3 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5" title="Reiniciar planificación para esta semana">
+                    <i class="fa-solid fa-arrows-rotate text-sky-400"></i> Reset
+                </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- NAVIGATION TABS (DAILY DEFAULT, WEEKLY SECOND) -->
+        <nav class="bg-slate-900/90 border-t border-slate-800/80 px-4 sm:px-8 overflow-x-auto">
+            <div class="max-w-7xl mx-auto flex space-x-6 min-w-max text-sm font-medium text-slate-400">
+                <button onclick="switchTab('daily')" id="tab-daily" class="py-3 px-1 tab-active transition flex items-center gap-2">
+                    <i class="fa-solid fa-sun text-base"></i> Visión Diaria
+                </button>
+                <button onclick="switchTab('weekly')" id="tab-weekly" class="py-3 px-1 hover:text-slate-200 transition flex items-center gap-2">
+                    <i class="fa-solid fa-calendar-days text-base"></i> Planificador Semanal
+                </button>
+                <button onclick="switchTab('diet-guide')" id="tab-diet-guide" class="py-3 px-1 hover:text-slate-200 transition flex items-center gap-2">
+                    <i class="fa-solid fa-book-open-reader text-base"></i> Guía Vitalitty
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- NOTIFICATION TOAST -->
+        <div id="toast" class="hidden fixed bottom-5 right-5 z-50 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl border border-sky-500/50 flex items-center space-x-3 transition-all duration-300">
+            <i class="fa-solid fa-circle-check text-sky-400 text-lg"></i>
+            <span id="toastMsg" class="text-sm font-medium">Acción completada con éxito.</span>
+        </div>
+
+        <!-- 1. DAILY VISION VIEW (DEFAULT) -->
+        <section id="view-daily" class="space-y-6">
+            <!-- Day Selector Bar -->
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center space-x-2 overflow-x-auto py-1">
+                    <span class="text-xs font-bold text-slate-400 uppercase mr-2">Día:</span>
+                    <div id="dailyDayButtons" class="flex space-x-1">
+                        <!-- Buttons rendered dynamically -->
+                    </div>
+                </div>
+                <div class="text-sm font-semibold text-slate-700 flex items-center gap-2">
+                    <i class="fa-solid fa-calendar-day text-sky-600"></i>
+                    <span id="selectedDayTitle" class="capitalize">Lunes</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                <!-- LEFT COLUMN: WATER TRACKER & NUTRITION REMINDERS -->
+                <div class="space-y-6 lg:col-span-1">
+                    
+                    <!-- Water Tracker Box -->
+                    <details class="water-tracker bg-gradient-to-br from-sky-900 to-slate-900 text-white rounded-2xl p-5 shadow-sm space-y-4 border border-sky-800/40">
+                        <summary class="flex cursor-pointer items-center justify-between gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-sky-300">
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-bottle-water text-sky-400 text-xl"></i>
+                                <div>
+                                    <h3 class="font-bold text-sm">Registro de Agua</h3>
+                                    <p class="text-xs text-sky-300">Objetivo diario: 4 litros</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span id="waterCountText" class="text-sm sm:text-lg font-black text-sky-400">0.00 / 4.00 L</span>
+                                <i class="water-tracker-chevron fa-solid fa-chevron-down text-xs text-sky-300 transition-transform" aria-hidden="true"></i>
+                            </div>
+                        </summary>
+
+                        <!-- Progress bar -->
+                        <div class="w-full bg-slate-800 rounded-full h-3 overflow-hidden border border-sky-900">
+                            <div id="waterProgressBar" class="bg-sky-400 h-full transition-all duration-300" style="width: 0%"></div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-2">
+                            <button onclick="addWater(0.25)" class="bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold py-2 rounded-xl transition">+250 ml</button>
+                            <button onclick="addWater(0.33)" class="bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold py-2 rounded-xl transition">+330 ml</button>
+                            <button onclick="addWater(0.5)" class="bg-sky-700 hover:bg-sky-600 text-white text-xs font-semibold py-2 rounded-xl transition">+500 ml</button>
+                            <button onclick="addWater(0.75)" class="bg-sky-700 hover:bg-sky-600 text-white text-xs font-semibold py-2 rounded-xl transition">+750 ml</button>
+                            <button onclick="addWater(1)" class="bg-sky-800 hover:bg-sky-700 text-white text-xs font-semibold py-2 rounded-xl transition">+1L</button>
+                            <button onclick="resetWater()" class="bg-slate-800 hover:bg-slate-700 text-slate-400 p-2 rounded-xl text-xs" title="Resetear agua">
+                                <i class="fa-solid fa-rotate-right"></i>
+                            </button>
+                        </div>
+
+                        <button id="waterIntakesOpenButton" type="button" onclick="toggleWaterIntakes(true)" aria-controls="waterIntakesDialog" aria-expanded="false" class="w-full border-t border-sky-800/70 pt-3 text-left text-xs font-semibold text-sky-200 hover:text-white transition">
+                            <i class="fa-solid fa-list-ul mr-1.5" aria-hidden="true"></i> Ver tomas de hoy (<span id="waterIntakesCount">0</span>)
+                        </button>
+                        <div id="waterIntakesDialog" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="waterIntakesTitle" onclick="if(event.target === this) toggleWaterIntakes(false)">
+                            <div class="w-full max-w-sm rounded-2xl border border-sky-700 bg-slate-900 p-5 text-white shadow-2xl" onclick="event.stopPropagation()">
+                                <div class="mb-4 flex items-center justify-between gap-3">
+                                    <h3 id="waterIntakesTitle" class="font-bold">Tomas de agua de hoy</h3>
+                                    <button type="button" onclick="toggleWaterIntakes(false)" aria-label="Cerrar tomas de agua" class="rounded-lg px-2 py-1 text-slate-300 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+                                </div>
+                                <div id="waterIntakesList" class="max-h-64 space-y-2 overflow-y-auto" aria-live="polite"></div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <!-- Guidelines Quick Reminder -->
+                    <div class="bg-sky-50 rounded-2xl p-4 border border-sky-200/80 space-y-2">
+                        <h4 class="text-xs font-bold text-sky-900 flex items-center gap-1">
+                            <i class="fa-solid fa-circle-info text-sky-600"></i> Reglas Inviolables Vitalitty
+                        </h4>
+                        <ul class="text-xs text-sky-800 space-y-1 list-disc list-inside">
+                            <li><strong>Aceite:</strong> 1.5 cucharadas para cocinar, 1 cucharada en ensalada.</li>
+                            <li><strong>Prohibidos en Cena:</strong> Carne roja, pescados azules grasos, pan blanco.</li>
+                            <li><strong>Frutos Secos:</strong> Siempre crudos y sin sal.</li>
+                            <li><strong>Comida Social:</strong> 1 comida o cena libre/social por semana.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN: Detailed Daily Meals Cards & Quantity Adjusters -->
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="font-bold text-slate-900 text-lg">Comidas Planificadas</h3>
+                        <span id="dailyCompletedCount" class="text-xs font-medium text-slate-500 bg-slate-200 px-3 py-1 rounded-full">0/5 completadas</span>
+                    </div>
+
+                    <!-- Daily Meals Container -->
+                    <div id="dailyMealsList" class="space-y-4">
+                        <!-- Javascript populates meal cards here -->
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 2. IMPROVED WEEKLY PLANNER VIEW -->
+        <section id="view-weekly" class="hidden space-y-6">
+            <!-- Goal & Rules Header Banner -->
+            <div class="bg-gradient-to-r from-sky-900/90 via-slate-900 to-slate-900 text-white rounded-2xl p-5 shadow-sm border border-sky-800/40 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div class="space-y-1">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-sky-500 text-slate-950 text-xs font-bold px-2 py-0.5 rounded">OBJETIVO VITALITTY</span>
+                        <h2 class="text-lg font-bold text-white">Limpiar grasa mejorando masa muscular y consumo de proteína</h2>
+                    </div>
+                    <p class="text-xs text-slate-300">
+                        <i class="fa-solid fa-bullseye text-sky-400 mr-1"></i> Proteína: 180g Soja | 240g Carne/Pescado Blanco | 200g Carne Roja/Pescado Azul.
+                        <br class="hidden sm:inline">
+                        <i class="fa-solid fa-wheat-awn text-sky-400 mr-1"></i> Hidratos: 130g (arroz/pasta/avena) o 400g Patata / Batata.
+                    </p>
+                </div>
+                <div class="flex items-center gap-3 w-full md:w-auto justify-end">
+                    <button onclick="autoGenerateWeek()" class="w-full md:w-auto bg-sky-600 hover:bg-sky-500 text-white font-semibold text-xs px-4 py-2.5 rounded-xl shadow-md transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Auto-Generar Menú Semanal
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile weekly completion matrix -->
+            <div id="weeklyComplianceMobile" class="md:hidden rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden"></div>
+
+            <!-- ENHANCED WEEK DAYS RESPONSIVE GRID (Equal Vertical Heights) -->
+            <div id="weeklyGrid" class="hidden md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-4 items-stretch">
+                <!-- Javascript will populate the 7 days with equal height cards -->
+            </div>
+        </section>
+
+        <!-- 3. OFFICIAL DIET GUIDE VIEW -->
+        <section id="view-diet-guide" class="hidden space-y-6">
+            <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 space-y-5">
+                <div class="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-book-bookmark text-sky-600"></i> Guía Nutricional Vitalitty</h2>
+                        <p id="guideIntro" class="text-sm text-slate-500 mt-1">Resumen del plan y opciones completas de comidas.</p>
+                    </div>
+                    <span id="guideSourceBadge" class="hidden text-[11px] font-bold uppercase tracking-wide rounded-full px-3 py-1 bg-sky-50 text-sky-700 border border-sky-100"><i class="fa-solid fa-file-pdf mr-1"></i>Importado desde PDF</span>
+                </div>
+                <div id="guideSummary" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3"></div>
+            </div>
+            <div id="guideMealSections" class="space-y-4"></div>
+
+        </section>
+
+    </main>
+
+    <div id="pdfImportModal" class="hidden fixed inset-0 z-[60] modal-backdrop flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[92vh] overflow-y-auto p-6 shadow-2xl border border-slate-200 space-y-4">
+            <div class="flex items-start justify-between border-b border-slate-200 pb-3">
+                <div><h2 class="text-lg font-bold text-slate-900">Actualizar plan desde PDF</h2><p class="text-xs text-slate-500 mt-1">Elige un PDF con texto seleccionable. Revisa la extracción antes de aplicarla.</p></div>
+                <button onclick="closePdfImport()" class="text-slate-400 hover:text-slate-700 text-lg" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <input id="pdfFileInput" type="file" accept="application/pdf,.pdf" onchange="processPdfFile(this.files[0])" class="block w-full text-sm text-slate-600 file:mr-3 file:rounded-lg file:border-0 file:bg-sky-50 file:px-4 file:py-2 file:font-semibold file:text-sky-700 hover:file:bg-sky-100">
+            <p id="pdfImportStatus" class="text-sm text-slate-500">La lectura se realiza en este navegador.</p>
+            <div id="pdfImportPreview" class="hidden space-y-3">
+                <div id="pdfImportSummary" class="rounded-xl bg-amber-50 border border-amber-200 p-3 text-xs text-amber-900"></div>
+                <label class="block text-xs font-semibold text-slate-700">Texto extraído (puedes corregirlo antes de actualizar)</label>
+                <textarea id="pdfExtractedText" rows="14" class="w-full rounded-xl border border-slate-300 p-3 text-xs leading-relaxed focus:border-sky-500 focus:outline-none"></textarea>
+                <p class="text-xs text-slate-500">Al aplicar, se actualizarán fecha de consulta, opciones de comida, guía completa y las comidas de la semana actual.</p>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="closePdfImport()" class="px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-100 rounded-xl">Cancelar</button>
+                <button id="applyPdfImportButton" onclick="applyPdfImport()" disabled class="px-4 py-2 text-xs font-bold bg-sky-600 text-white rounded-xl shadow disabled:opacity-40">Aplicar actualización</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- EDIT MEAL MODAL -->
+    <div id="editMealModal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-200 pb-3">
+                <h3 class="font-bold text-slate-900 text-base" id="modalTitle">Asignar Comida</h3>
+                <button onclick="closeEditModal()" class="text-slate-400 hover:text-slate-600 text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Elegir de las Opciones Vitalitty:</label>
+                    <select id="modalOptionSelect" class="w-full text-sm rounded-xl border border-slate-300 p-2.5 focus:ring-2 focus:ring-sky-500">
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Ajustes o Notas de Cantidades:</label>
+                    <textarea id="modalTextCustom" rows="3" class="w-full text-sm rounded-xl border border-slate-300 p-2.5 focus:ring-2 focus:ring-sky-500" placeholder="Ej. Aumentar patata a 450g por WOD intenso..."></textarea>
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-3 pt-2">
+                <button onclick="closeEditModal()" class="px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-100 rounded-xl transition">Cancelar</button>
+                <button onclick="saveMealFromModal()" class="px-4 py-2 text-xs font-bold bg-sky-600 hover:bg-sky-500 text-white rounded-xl transition shadow-md">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MULTI-DEVICE SYNC MODAL -->
+    <div id="syncModal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-200 pb-3">
+                <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                    <i class="fa-solid fa-mobile-screen-button text-sky-600"></i> Sincronización JSONbin.io
+                </h3>
+                <button onclick="closeSyncModal()" class="text-slate-400 hover:text-slate-600 text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="space-y-3 text-xs text-slate-600">
+                <p>Sincroniza tus datos entre dispositivos con <strong>JSONbin.io</strong>:</p>
+                <div class="space-y-2">
+                    <div>
+                        <label class="block font-bold text-slate-800 mb-1">JSONbin Bin ID:</label>
+                        <input type="text" id="jsonbinIdInput" class="w-full text-sm font-mono font-bold rounded-xl border border-slate-300 p-2.5 text-center text-sky-700" placeholder="Ej: 65a1234567890abcdef">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-800 mb-1">Master / Access Key (Opcional):</label>
+                        <input type="password" id="jsonbinKeyInput" class="w-full text-sm font-mono rounded-xl border border-slate-300 p-2.5 text-center text-slate-700" placeholder="$2a$10$...">
+                    </div>
+                </div>
+                
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-[11px] space-y-2">
+                    <p class="font-semibold text-slate-800">⚡ Sincronización y Configuración:</p>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="forcePushToCloud()" class="bg-slate-900 hover:bg-slate-800 text-white font-medium py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 transition">
+                            <i class="fa-solid fa-cloud-arrow-up text-sky-400"></i> Subir a JSONbin
+                        </button>
+                        <button onclick="forcePullFromCloud()" class="bg-sky-600 hover:bg-sky-500 text-white font-medium py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 transition">
+                            <i class="fa-solid fa-cloud-arrow-down"></i> Descargar JSONbin
+                        </button>
+                    </div>
+                    <button onclick="createNewJsonbin()" class="w-full bg-sky-100 hover:bg-sky-200 text-sky-800 font-bold py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 transition">
+                        <i class="fa-solid fa-plus-circle text-sky-600"></i> Crear Bin Automático en JSONbin
+                    </button>
+                </div>
+
+                <!-- DIRECT TEST LINK BUTTON -->
+                <div class="pt-1">
+                    <button onclick="openRawCloudURL()" class="w-full bg-sky-50 hover:bg-sky-100 text-sky-800 font-bold border border-sky-300 py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 transition">
+                        <i class="fa-solid fa-arrow-up-right-from-square text-sky-600"></i> Abrir JSONbin en el Navegador
+                    </button>
+                </div>
+
+                <div class="text-[11px] text-slate-500 leading-snug bg-amber-50 p-2.5 rounded-xl border border-amber-200 text-amber-900">
+                    <p>💡 <strong>Instrucciones:</strong> Haz clic en <strong>"Crear Bin Automático"</strong> para generar un nuevo identificador JSONbin o introduce un <i>Bin ID</i> guardado para conectar otro teléfono o tablet.</p>
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-3 pt-2">
+                <button onclick="closeSyncModal()" class="px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-100 rounded-xl transition">Cerrar</button>
+                <button onclick="saveSyncCodeFromModal()" class="px-4 py-2 text-xs font-bold bg-sky-600 hover:bg-sky-500 text-white rounded-xl transition shadow-md">Guardar y Conectar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        if (window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        const VITALITTY_OPTIONS = {
+            desayuno: [
+                "Infusión + 20g frutos secos + pieza de fruta"
+            ],
+            mediaManana: [
+                "Opción 1: Zumo natural + revuelto (3 huevos + 100ml claras) con 70g pavo + 2 frutas",
+                "Opción 2: Café + Porridge de avena (40g copos + 250ml kéfir + 30g whey + 15g frutos secos + 1 cu. crema cacahuete)",
+                "Opción 3: Yogur desnatado + 2 tostadas pan integral (100g) c/ (40g queso curado y mermelada light) O (15g aceite, tomate, 60g lomo + 20g pistachos)"
+            ],
+            comida: [
+                "1. Ensalada de garbanzos (garbanzos, 2 latas atún, tomate, pepino, cebolla)",
+                "2. Ensalada campera (patata, espárragos blancos, pimiento, queso fresco, huevo cocido)",
+                "3. Arroz blanco con zanahorias y sepia a la plancha",
+                "4. Burritos (2 pan de fajita, con arroz, verduras y ternera)",
+                "5. Pasta con tacos de salmón, tomate seco y verduras libres",
+                "6. Pescadilla a la plancha, ensalada de tomate y batata asada",
+                "7. Quinoa con tacos de calabacín y emperador a la plancha"
+            ],
+            preEntreno: [
+                "Opción 1: Manzana (sin piel) + yogur desnatado + 3 tortitas arroz/maíz con 1 cu. miel",
+                "Opción 2: Puñado frutos secos + yogur desnatado con 40g cereales integrales"
+            ],
+            cena: [
+                "1. Merluza (airfryer u horno), trigueros y patatas panaderas",
+                "2. Arroz con tomate y huevos a la plancha y ensalada mixta",
+                "3. 2 tostadas de pan integral con revuelto de huevo, ajetes y setas",
+                "4. Pasta con tacos de pollo y pesto",
+                "5. Ternera a la plancha, puerro asado y puré de patatas",
+                "6. Ensalada de pasta con 2 latas de atún y verduras libres",
+                "7. LIBRE / Social (Respetando descanso/comida social)"
+            ]
+        };
+
+        const DAILY_WATER_TARGET_L = 4;
+
+        const DAYS_KEYS = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"];
+        const DAYS_NAMES = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+
+        let currentWeekKey = "";
+        let weeklyPlan = {};
+        let activeDailyDay = "lunes";
+        let modalState = { day: "", mealType: "" };
+        let importedPdfText = "";
+        let nutritionProfile = {
+            calories: '2800–3200 kcal',
+            proteins: ['180 g · Soja', '240 g · Carne blanca y pescado blanco', '200 g · Carne roja y pescado azul'],
+            carbs: '130 g o 400 g de patata/batata',
+            goal: 'Limpiar grasa y conservar masa muscular',
+            notes: []
+        };
+
+        function applySavedNutritionData() {
+            try {
+                const saved = JSON.parse(localStorage.getItem('vitalitty_nutrition_data') || 'null');
+                if (!saved) return;
+                if (saved.options) Object.keys(VITALITTY_OPTIONS).forEach(key => {
+                    if (Array.isArray(saved.options[key]) && saved.options[key].length) VITALITTY_OPTIONS[key] = saved.options[key];
+                });
+                if (saved.profile) nutritionProfile = {...nutritionProfile, ...saved.profile};
+                if (saved.date) updateConsultationDate(saved.date);
+                if (saved.fullText) {
+                    importedPdfText = saved.fullText;
+                    document.getElementById('guideSourceBadge').classList.remove('hidden');
+                }
+            } catch (e) { console.warn('No se pudo cargar la guía guardada', e); }
+        }
+
+        function openPdfImport() {
+            document.getElementById('pdfImportModal').classList.remove('hidden');
+            document.getElementById('pdfImportPreview').classList.add('hidden');
+            document.getElementById('pdfImportStatus').textContent = 'La lectura se realiza en este navegador.';
+            document.getElementById('pdfFileInput').value = '';
+            document.getElementById('applyPdfImportButton').disabled = true;
+        }
+        function closePdfImport() { document.getElementById('pdfImportModal').classList.add('hidden'); }
+
+        async function processPdfFile(file) {
+            if (!file) return;
+            const status = document.getElementById('pdfImportStatus');
+            const button = document.getElementById('applyPdfImportButton');
+            button.disabled = true;
+            if (!window.pdfjsLib) { status.textContent = 'No se pudo cargar el lector PDF. Comprueba tu conexión y vuelve a intentarlo.'; return; }
+            if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) { status.textContent = 'Selecciona un archivo PDF.'; return; }
+            status.textContent = 'Leyendo el PDF…';
+            try {
+                const doc = await pdfjsLib.getDocument({data: await file.arrayBuffer()}).promise;
+                const pages = [];
+                for (let pageNum = 1; pageNum <= doc.numPages; pageNum++) {
+                    const page = await doc.getPage(pageNum);
+                    const content = await page.getTextContent();
+                    const rows = new Map();
+                    content.items.forEach(item => {
+                        if (!item.str || !item.str.trim()) return;
+                        const y = Math.round(item.transform[5] / 3) * 3;
+                        rows.set(y, (rows.get(y) || []).concat([{x: item.transform[4], width: item.width || 0, text: item.str.trim()}]));
+                    });
+                    pages.push([...rows.entries()].sort((a,b) => b[0]-a[0]).map(([,items]) => {
+                        const ordered = items.sort((a,b) => a.x-b.x);
+                        return ordered.reduce((line, item, index) => {
+                            if (!index) return item.text;
+                            const previous = ordered[index - 1];
+                            const gap = item.x - (previous.x + previous.width);
+                            return line + (gap > 1.4 ? ' ' : '') + item.text;
+                        }, '');
+                    }).join('\n'));
+                }
+                const text = pages.join('\n\n');
+                if (text.replace(/\s/g,'').length < 40) throw new Error('El PDF no contiene texto seleccionable. Si es un escaneo, necesita OCR antes de importarlo.');
+                document.getElementById('pdfExtractedText').value = text;
+                document.getElementById('pdfImportPreview').classList.remove('hidden');
+                const parsed = parseNutritionPdf(text);
+                const missing = parsed.missing.length ? `No se detectaron claramente: ${parsed.missing.join(', ')}. El texto completo sí quedará en la guía.` : 'Se reconocieron las cinco comidas.';
+                const dateLabel = parsed.date ? ` Próxima revisión detectada: ${parsed.date}.` : ' No se detectó la fecha de próxima revisión.';
+                document.getElementById('pdfImportSummary').textContent = `${file.name} · ${doc.numPages} página(s).${dateLabel} ${missing} Revisa el texto y corrige cualquier error antes de aplicar.`;
+                button.disabled = false;
+                status.textContent = 'Extracción lista para revisar.';
+            } catch (error) {
+                console.error(error);
+                status.textContent = error.message || 'No se pudo leer el PDF.';
+            }
+        }
+
+        function parseNutritionPdf(rawText) {
+            const lines = rawText.replace(/\r/g, '').split('\n').map(line => line.replace(/\s+/g, ' ').trim()).filter(Boolean);
+            const canonical = value => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');
+            const sectionKeys = ['desayuno', 'mediaManana', 'comida', 'preEntreno', 'cena'];
+            const isHeader = line => {
+                const value = canonical(line);
+                if (/^(?:observaciones|evitar|habitos|tecnicasculinarias|alimentos|plannutricional|dieta|proximarevision)/.test(value)) return null;
+                if (value.startsWith('mediamanana')) return 'mediaManana';
+                if (value.startsWith('preentreno')) return 'preEntreno';
+                if (value === 'desayuno' || value.startsWith('desayunoelige')) return 'desayuno';
+                if (value === 'comida' || value.startsWith('comidaelige')) return 'comida';
+                if (value === 'cena' || value.startsWith('cenaselige')) return 'cena';
+                return null;
+            };
+            const sections = [];
+            lines.forEach((line, index) => {
+                const key = isHeader(line);
+                if (key && !sections.some(section => section.key === key)) sections.push({key, index});
+            });
+            sections.sort((a,b) => a.index-b.index);
+            const options = {};
+            sections.forEach((section, i) => {
+                const end = sections[i + 1]?.index ?? lines.findIndex((line, idx) => idx > section.index && /^(observaciones|evitar|habitos|tecnicas culinarias)\b/i.test(line));
+                const stop = end < 0 ? lines.length : end;
+                const content = lines.slice(section.index + 1, stop).filter(line => !/^los cambios de una cita concertada\b/i.test(line));
+                const items = [];
+                const startPattern = section.key === 'mediaManana' ? /^opci[oó]n\s*\d+\s*:/i
+                    : (section.key === 'comida' || section.key === 'cena') ? /^\d{1,2}\s*[.)]\s*/
+                    : section.key === 'preEntreno' ? /^(?:[-•]\s+|opci[oó]n\s*\d+\s*:?)/i
+                    : null;
+                if (section.key === 'desayuno') {
+                    const value = content.join(' ').trim();
+                    if (value) items.push(value);
+                } else {
+                    content.forEach(line => {
+                        if (startPattern?.test(line)) {
+                            const cleaned = line.replace(startPattern, '').trim();
+                            if (cleaned) items.push(cleaned);
+                        } else if (items.length && !/^[-•]?\s*(?:los cambios de una cita|aviso previo)\b/i.test(line)) {
+                            items[items.length - 1] += ` ${line.replace(/^[-•]\s*/, '').trim()}`;
+                        }
+                    });
+                }
+                const cleanedItems = items.map(item => item.replace(/\s+/g, ' ').trim()).filter(item => item.length > 3);
+                if (cleanedItems.length) options[section.key] = cleanedItems;
+            });
+            const dateMatch = rawText.match(/pr[oó]xima\s+(?:consulta|revisi[oó]n)\s*:\s*([^\n]+)/i)
+                || rawText.match(/(?:consulta|revisi[oó]n)\s+el\s*[:\-]?\s*([^\n]+)/i);
+            const date = dateMatch ? dateMatch[1].trim().replace(/\s+/g, ' ') : '';
+            const caloriesMatch = rawText.match(/DIETA\s*:\s*([\d.]+\s*[-–]\s*[\d.]+\s*KCAL)/i);
+            const proteinMatch = rawText.match(/Prote[ií]na\s+ser[aá]\s+de\s*:\s*([\s\S]*?)(?=Hidrato\s+de\s+carbono|$)/i);
+            const carbsMatch = rawText.match(/Hidrato\s+de\s+carbono\s+ser[aá]\s+de\s*:\s*([^\n]+)/i);
+            const goalMatch = rawText.match(/objetivo principal ser[aá]\s+([\s\S]*?)(?=\n\s*-\s*La cantidad|$)/i);
+            const proteinItems = proteinMatch ? proteinMatch[1].replace(/\s+/g, ' ').split(/,\s*/).map(item => item.trim()).filter(Boolean).map(item => item.replace(/(\d+)\s*gr\b/ig, '$1 g').replace(/^de\s+/i, '')) : [];
+            const notesStart = lines.findIndex(line => canonical(line) === 'observaciones');
+            const notesEnd = notesStart < 0 ? -1 : lines.findIndex((line, index) => index > notesStart && /^los cambios de una cita concertada\b/i.test(line));
+            const notes = notesStart >= 0 ? lines.slice(notesStart + 1, notesEnd < 0 ? lines.length : notesEnd) : [];
+            const profile = {
+                calories: caloriesMatch ? caloriesMatch[1].replace(/\s+/g, ' ').replace(/-/g, '–').toLowerCase() : '',
+                proteins: proteinItems,
+                carbs: carbsMatch ? carbsMatch[1].trim().replace(/\s+/g, ' ').replace(/(\d+)\s*gr\b/ig, '$1 g') : '',
+                goal: goalMatch ? goalMatch[1].trim().replace(/\s+/g, ' ').replace(/[.;,]$/, '') : '',
+                notes
+            };
+            return {options, date, profile, missing: sectionKeys.filter(key => !options[key]?.length)};
+        }
+
+        function updateConsultationDate(date) {
+            document.querySelector('header p.text-xs.text-slate-400').textContent = `Alfredo Tendero Casanova • Próxima Revisión: ${date}`;
+            const guideIntro = document.querySelector('#view-diet-guide p.text-sm.text-slate-500');
+            if (guideIntro) guideIntro.innerHTML = `Seguimiento actualizado desde la consulta. Próxima revisión: <strong>${escapeHtml(date)}</strong>.`;
+        }
+
+        function escapeHtml(text) {
+            return String(text).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+        }
+
+        function applyPdfImport() {
+            const text = document.getElementById('pdfExtractedText').value.trim();
+            if (!text) return;
+            const parsed = parseNutritionPdf(text);
+            const mealKeys = ['desayuno','mediaManana','comida','preEntreno','cena'];
+            mealKeys.forEach(key => { if (parsed.options[key]?.length) VITALITTY_OPTIONS[key] = parsed.options[key]; });
+            if (parsed.date) updateConsultationDate(parsed.date);
+            DAYS_KEYS.forEach((day, index) => mealKeys.forEach(key => {
+                if (!parsed.options[key]?.length) return;
+                const slot = weeklyPlan[day]?.meals?.[key];
+                if (!slot) return;
+                slot.title = parsed.options[key][index % parsed.options[key].length];
+                slot.details = '';
+                slot.completed = false;
+            }));
+            importedPdfText = text;
+            nutritionProfile = {...nutritionProfile, ...parsed.profile};
+            document.getElementById('guideSourceBadge').classList.remove('hidden');
+            const savedNutrition = JSON.parse(localStorage.getItem('vitalitty_nutrition_data') || '{}');
+            localStorage.setItem('vitalitty_nutrition_data', JSON.stringify({date: parsed.date || savedNutrition.date || '', options: VITALITTY_OPTIONS, profile: nutritionProfile, fullText: text}));
+            savePlan();
+            renderWeeklyGrid(); renderDailyView(); renderGuideView();
+            closePdfImport();
+            showToast('Plan y guía actualizados desde el PDF.');
+        }
+
+        function getJsonbinId() {
+            return (localStorage.getItem('vitalitty_jsonbin_id') || '').trim();
+        }
+
+        function setJsonbinId(id) {
+            localStorage.setItem('vitalitty_jsonbin_id', id.trim());
+        }
+
+        function getJsonbinKey() {
+            return (localStorage.getItem('vitalitty_jsonbin_key') || '').trim();
+        }
+
+        function setJsonbinKey(key) {
+            localStorage.setItem('vitalitty_jsonbin_key', key.trim());
+        }
+
+        function getNaturalWeekKey(dateObj = new Date()) {
+            const d = new Date(dateObj);
+            const day = d.getDay();
+            const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+            const monday = new Date(d.setDate(diff));
+            monday.setHours(0, 0, 0, 0);
+            return `vitalitty_week_${monday.getFullYear()}_${monday.getMonth()+1}_${monday.getDate()}`;
+        }
+
+        function getWeekDateRangeText() {
+            const d = new Date();
+            const day = d.getDay();
+            const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+            const monday = new Date(d.setDate(diff));
+            const sunday = new Date(monday);
+            sunday.setDate(monday.getDate() + 6);
+            return `${monday.getDate()}/${monday.getMonth()+1}/${monday.getFullYear()} - ${sunday.getDate()}/${sunday.getMonth()+1}/${sunday.getFullYear()}`;
+        }
+
+        function closeHeaderActions() {
+            const menu = document.getElementById('headerActions');
+            const toggle = document.getElementById('mobileActionsToggle');
+            if (menu) menu.classList.remove('is-open');
+            if (toggle) toggle.setAttribute('aria-expanded', 'false');
+        }
+
+        function toggleHeaderActions() {
+            const menu = document.getElementById('headerActions');
+            const toggle = document.getElementById('mobileActionsToggle');
+            if (!menu || !toggle) return;
+            const isOpen = menu.classList.toggle('is-open');
+            toggle.setAttribute('aria-expanded', String(isOpen));
+        }
+
+        function setupHeaderActionsMenu() {
+            const menu = document.getElementById('headerActions');
+            const toggle = document.getElementById('mobileActionsToggle');
+            if (!menu || !toggle) return;
+            document.addEventListener('click', event => {
+                if (!menu.contains(event.target) && !toggle.contains(event.target)) closeHeaderActions();
+                if (menu.contains(event.target) && event.target.closest('button')) closeHeaderActions();
+            });
+            document.addEventListener('keydown', event => {
+                if (event.key === 'Escape') closeHeaderActions();
+            });
+            window.addEventListener('resize', () => {
+                if (window.matchMedia('(min-width: 640px)').matches) closeHeaderActions();
+            });
+        }
+
+        function initApp() {
+            setupHeaderActionsMenu();
+            applySavedNutritionData();
+            currentWeekKey = getNaturalWeekKey();
+            window.currentWeekKey = currentWeekKey;
+
+            const todayIndex = new Date().getDay();
+            const dayMap = ["domingo", "lunes", "martes", "miercoles", "jueves", "viernes", "sabado"];
+            activeDailyDay = dayMap[todayIndex] || "lunes";
+
+            const savedData = localStorage.getItem(currentWeekKey);
+            if (savedData) {
+                try {
+                    weeklyPlan = JSON.parse(savedData);
+                } catch(e) {
+                    weeklyPlan = createEmptyWeekPlan();
+                }
+            } else {
+                weeklyPlan = createEmptyWeekPlan();
+            }
+
+            window.weeklyPlan = weeklyPlan;
+
+            // Set daily view as default active tab
+            switchTab('daily');
+
+            renderWeeklyGrid();
+            renderDailyView();
+            renderGuideView();
+
+            // Sincronización continua en segundo plano
+            pullDataFromCloud(false);
+        }
+
+        function createEmptyWeekPlan() {
+            const plan = {};
+            DAYS_KEYS.forEach(day => {
+                plan[day] = {
+                    activity: "moderate",
+                    water: 0,
+                    waterIntakes: [],
+                    meals: {
+                        desayuno: { title: VITALITTY_OPTIONS.desayuno[0], details: "", completed: false },
+                        mediaManana: { title: VITALITTY_OPTIONS.mediaManana[0], details: "", completed: false },
+                        comida: { title: VITALITTY_OPTIONS.comida[0], details: "", completed: false },
+                        preEntreno: { title: VITALITTY_OPTIONS.preEntreno[0], details: "", completed: false },
+                        cena: { title: VITALITTY_OPTIONS.cena[0], details: "", completed: false }
+                    }
+                };
+            });
+            return plan;
+        }
+
+        function savePlan(pushToCloud = true) {
+            try {
+                localStorage.setItem(currentWeekKey, JSON.stringify(weeklyPlan));
+                localStorage.setItem('vitalitty_last_update_' + currentWeekKey, Date.now());
+                if (pushToCloud) {
+                    pushDataToCloud(weeklyPlan);
+                }
+            } catch(e) {
+                console.error("Error al guardar en almacenamiento local", e);
+            }
+        }
+
+        function getCloudEndpoint() {
+            const binId = getJsonbinId();
+            if (!binId) return null;
+            return `https://api.jsonbin.io/v3/b/${binId}`;
+        }
+
+        function openRawCloudURL() {
+            const binId = getJsonbinId();
+            if (!binId) {
+                showToast("Primero debes ingresar o crear un Bin ID.");
+                return;
+            }
+            window.open(`https://api.jsonbin.io/v3/b/${binId}/latest`, '_blank');
+        }
+
+        async function createNewJsonbin() {
+            showToast("Creando bin en JSONbin.io...");
+            try {
+                const apiKey = getJsonbinKey();
+                const headers = {
+                    'Content-Type': 'application/json',
+                    'X-Bin-Private': 'false',
+                    'X-Bin-Name': `Vitalitty_${currentWeekKey}`
+                };
+                if (apiKey) headers['X-Master-Key'] = apiKey;
+
+                const payload = {
+                    weeklyPlan: weeklyPlan,
+                    nutritionData: JSON.parse(localStorage.getItem('vitalitty_nutrition_data') || 'null'),
+                    updatedAt: Date.now(),
+                    client: 'Vitalitty App Alfredo'
+                };
+
+                const res = await fetch('https://api.jsonbin.io/v3/b', {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify(payload)
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    const newBinId = data.metadata.id;
+                    setJsonbinId(newBinId);
+                    document.getElementById('jsonbinIdInput').value = newBinId;
+                    updateSyncBadgeUI(true, "JSONbin Creado");
+                    showToast("¡Nuevo Bin creado en JSONbin con éxito!");
+                    return newBinId;
+                } else {
+                    showToast("Error al crear Bin en JSONbin.");
+                }
+            } catch (e) {
+                console.error(e);
+                showToast("Fallo de conexión con JSONbin.");
+            }
+            return null;
+        }
+
+        async function pushDataToCloud(planData, notify = false) {
+            let binId = getJsonbinId();
+            if (!binId) {
+                updateSyncBadgeUI(false, "Sin Bin ID");
+                if (notify) showToast("Configura o crea un Bin ID en el menú de sincronización.");
+                return false;
+            }
+
+            const apiKey = getJsonbinKey();
+            const endpoint = getCloudEndpoint();
+            const timestamp = Date.now();
+            const payload = {
+                weeklyPlan: planData,
+                nutritionData: JSON.parse(localStorage.getItem('vitalitty_nutrition_data') || 'null'),
+                updatedAt: timestamp
+            };
+
+            updateSyncBadgeUI(true, "Guardando...");
+
+            try {
+                const headers = { 'Content-Type': 'application/json' };
+                if (apiKey) headers['X-Master-Key'] = apiKey;
+
+                const response = await fetch(endpoint, {
+                    method: 'PUT',
+                    headers: headers,
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    updateSyncBadgeUI(true, "JSONbin Activo");
+                    if (notify) showToast("¡Datos subidos a JSONbin correctamente!");
+                    return true;
+                }
+            } catch (err) {
+                console.warn("Retraso en conexión con JSONbin:", err);
+            }
+
+            updateSyncBadgeUI(false, "Error Sync");
+            if (notify) showToast("Error al subir los datos a JSONbin.");
+            return false;
+        }
+
+        async function pullDataFromCloud(force = false) {
+            const binId = getJsonbinId();
+            if (!binId) {
+                updateSyncBadgeUI(false, "Sin Bin ID");
+                if (force) showToast("Configura un Bin ID en el menú de sincronización.");
+                return false;
+            }
+
+            const apiKey = getJsonbinKey();
+            const endpoint = `https://api.jsonbin.io/v3/b/${binId}/latest?nocache=${Date.now()}`;
+
+            try {
+                const headers = {
+                    'Content-Type': 'application/json'
+                };
+                if (apiKey) {
+                    headers['X-Master-Key'] = apiKey;
+                    headers['X-Access-Key'] = apiKey;
+                }
+
+                const response = await fetch(endpoint, { 
+                    method: 'GET', 
+                    headers: headers,
+                    cache: 'no-store'
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const record = data.record || {};
+                    const remotePlan = record.weeklyPlan || (record.lunes ? record : null);
+
+                    if (record.nutritionData && typeof record.nutritionData === 'object') {
+                        localStorage.setItem('vitalitty_nutrition_data', JSON.stringify(record.nutritionData));
+                        applySavedNutritionData();
+                        renderGuideView();
+                    }
+
+                    if (remotePlan) {
+                        const localTime = parseInt(localStorage.getItem('vitalitty_last_update_' + currentWeekKey) || '0', 10);
+                        const cloudTime = record.updatedAt || Date.now();
+
+                        if (force || cloudTime > localTime) {
+                            weeklyPlan = remotePlan;
+                            window.weeklyPlan = weeklyPlan;
+                            localStorage.setItem(currentWeekKey, JSON.stringify(weeklyPlan));
+                            localStorage.setItem('vitalitty_last_update_' + currentWeekKey, cloudTime);
+
+                            renderWeeklyGrid();
+                            renderDailyView();
+
+                            updateSyncBadgeUI(true, "JSONbin Activo");
+                            if (force) showToast("¡Datos remotos descargados correctamente!");
+                            return true;
+                        } else {
+                            if (force) showToast("Tus datos locales ya están al día.");
+                        }
+                    } else {
+                        if (force) showToast("Estructura de JSON inválida en el servidor.");
+                    }
+                } else {
+                    const errData = await response.json().catch(() => ({}));
+                    const msg = errData.message || `Error HTTP ${response.status}`;
+                    if (force) showToast(`Error al descargar: ${msg}`);
+                    updateSyncBadgeUI(false, "Error Sync");
+                }
+            } catch (err) {
+                console.warn("Error de red/conexión con JSONbin:", err);
+                if (force) showToast("Error de conexión al consultar JSONbin.");
+                updateSyncBadgeUI(false, "Sin Conexión");
+            }
+
+            return false;
+        }
+
+        async function forcePullFromCloud() {
+            showToast("Descargando datos remotos de JSONbin...");
+            const pulled = await pullDataFromCloud(true);
+            if (pulled) {
+                setTimeout(() => {
+                    window.location.reload();
+                }, 700);
+            }
+        }
+
+        async function triggerManualSync() {
+            showToast("Sincronizando con JSONbin...");
+            const pulled = await pullDataFromCloud(true);
+            if (!pulled) {
+                await pushDataToCloud(weeklyPlan, false);
+            }
+        }
+
+        function updateSyncBadgeUI(active, text) {
+            const dot = document.getElementById('syncDot');
+            const txt = document.getElementById('syncStatusText');
+            if (active) {
+                dot.className = "w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400 animate-pulse";
+                txt.innerText = text || "JSONbin Activo";
+                txt.className = "text-emerald-400 font-semibold";
+            } else {
+                dot.className = "w-2.5 h-2.5 rounded-full bg-amber-400";
+                txt.innerText = text || "Modo Local";
+                txt.className = "text-amber-300 font-medium";
+            }
+        }
+
+        function checkAndPromptReset(manual = false) {
+            if (manual) {
+                if (confirm("¿Deseas resetear el plan semanal a los valores por defecto del plan Vitalitty?")) {
+                    weeklyPlan = createEmptyWeekPlan();
+                    window.weeklyPlan = weeklyPlan;
+                    savePlan(true);
+                    renderWeeklyGrid();
+                    renderDailyView();
+                    showToast("Planificación semanal reiniciada.");
+                }
+            }
+        }
+
+        function renderWeeklyGrid() {
+            const grid = document.getElementById('weeklyGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            DAYS_KEYS.forEach((dayKey, index) => {
+                const dayData = weeklyPlan[dayKey] || createEmptyWeekPlan()[dayKey];
+                const dayName = DAYS_NAMES[index];
+
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl border border-slate-200 p-3.5 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-2.5 h-full relative";
+                
+                // Helper to generate meal slot in weekly view with equal vertical sizing & hover details
+                const makeMealBox = (mealKey, label, iconClass, textClass, defaultBgClass) => {
+                    const meal = dayData.meals[mealKey];
+                    const isDone = meal.completed;
+                    const bgStyle = isDone 
+                        ? 'bg-emerald-500/10 border-2 border-emerald-500 shadow-sm' 
+                        : `${defaultBgClass} border border-slate-200/80 hover:bg-sky-50/60 hover:border-sky-300`;
+                    
+                    return `
+                        <div class="group relative p-2.5 rounded-xl cursor-pointer transition-all space-y-1 ${bgStyle}" onclick="openEditModal('${dayKey}', '${mealKey}')">
+                            <div class="flex justify-between items-center gap-1">
+                                <span class="font-bold ${isDone ? 'text-sky-800' : textClass} text-[10px] uppercase tracking-wider flex items-center gap-1 truncate">
+                                    <i class="fa-solid ${iconClass} shrink-0"></i> ${label}
+                                </span>
+                                ${isDone ? '<span class="w-4 h-4 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[9px] shrink-0 shadow-sm" title="Realizado"><i class="fa-solid fa-check"></i></span>' : ''}
+                            </div>
+                            <p class="${isDone ? 'text-sky-950 font-bold' : 'text-slate-800 font-medium'} text-xs leading-tight line-clamp-1" title="${meal.title}">${meal.title}</p>
+                            
+                            <!-- HOVER TOOLTIP DETAILED CARD -->
+                            <div class="opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all duration-200 absolute left-0 right-0 top-full mt-1.5 z-50 bg-slate-900 text-white text-xs p-3 rounded-xl shadow-2xl border border-slate-700 space-y-1.5">
+                                <div class="flex items-center justify-between border-b border-slate-700 pb-1">
+                                    <span class="font-bold text-sky-400 text-[10px] uppercase tracking-wider flex items-center gap-1">
+                                        <i class="fa-solid ${iconClass}"></i> ${label}
+                                    </span>
+                                    ${isDone ? '<span class="text-[10px] text-sky-400 font-bold flex items-center gap-1"><i class="fa-solid fa-circle-check"></i> Realizado</span>' : '<span class="text-[10px] text-slate-400">Pendiente</span>'}
+                                </div>
+                                <p class="text-slate-100 font-medium leading-relaxed">${meal.title}</p>
+                                ${meal.details ? `<p class="text-[11px] text-sky-300 bg-slate-800 p-1.5 rounded-lg border border-sky-500/30 italic"><i class="fa-solid fa-note-sticky mr-1"></i>${meal.details}</p>` : ''}
+                            </div>
+                        </div>
+                    `;
+                };
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+                        <h3 class="font-bold text-slate-900 text-sm flex items-center gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-sky-500 shrink-0"></span> ${dayName}
+                        </h3>
+                        <button onclick="goToDailyDay('${dayKey}')" class="text-[11px] text-sky-600 hover:text-sky-800 font-semibold flex items-center gap-1 bg-sky-50 px-2 py-0.5 rounded-lg transition">
+                            Ajustar <i class="fa-solid fa-chevron-right text-[9px]"></i>
+                        </button>
+                    </div>
+
+                    <div class="space-y-2 text-xs flex-grow">
+                        ${makeMealBox('desayuno', 'Desayuno', 'fa-mug-hot', 'text-amber-600', 'bg-slate-50')}
+                        ${makeMealBox('mediaManana', 'Media Mañana', 'fa-sun', 'text-orange-600', 'bg-slate-50')}
+                        ${makeMealBox('comida', 'Comida', 'fa-utensils', 'text-sky-700', 'bg-sky-50/50')}
+                        ${makeMealBox('preEntreno', 'Pre-Entreno', 'fa-bolt', 'text-amber-600', 'bg-slate-50')}
+                        ${makeMealBox('cena', 'Cena', 'fa-moon', 'text-indigo-700', 'bg-indigo-50/40')}
+                    </div>
+
+                    <div class="pt-2 border-t border-slate-100 flex justify-between items-center text-[11px] text-slate-500 font-medium bg-slate-50 p-2 rounded-xl mt-auto">
+                        <span><i class="fa-solid fa-droplet text-sky-500 mr-1"></i>${dayData.water.toFixed(1)}L</span>
+                        <span class="capitalize text-slate-700 font-semibold truncate max-w-[100px]"><i class="fa-solid fa-person-running text-sky-600 mr-1"></i>${getActivityLabel(dayData.activity)}</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            renderWeeklyComplianceMobile();
+        }
+
+        function renderWeeklyComplianceMobile() {
+            const container = document.getElementById('weeklyComplianceMobile');
+            if (!container) return;
+            const meals = [
+                { key: 'desayuno', label: 'Desayuno', icon: 'fa-mug-hot' },
+                { key: 'mediaManana', label: 'Media mañana', icon: 'fa-sun' },
+                { key: 'comida', label: 'Comida', icon: 'fa-utensils' },
+                { key: 'preEntreno', label: 'Pre-entreno', icon: 'fa-bolt' },
+                { key: 'cena', label: 'Cena', icon: 'fa-moon' }
+            ];
+            const table = document.createElement('table');
+            table.className = 'w-full min-w-[360px] table-fixed border-collapse text-center text-xs';
+            const head = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+            headerRow.className = 'bg-slate-50';
+            const labelHead = document.createElement('th');
+            labelHead.className = 'sticky left-0 z-10 w-24 bg-slate-50 px-2 py-3 text-left font-semibold text-slate-500';
+            labelHead.textContent = 'Comida';
+            headerRow.appendChild(labelHead);
+            DAYS_KEYS.forEach((dayKey, index) => {
+                const dayData = weeklyPlan[dayKey] || createEmptyWeekPlan()[dayKey];
+                const doneCount = meals.filter(meal => dayData.meals?.[meal.key]?.completed).length;
+                const th = document.createElement('th');
+                th.className = 'min-w-[36px] border-b border-slate-200 px-0.5 py-2';
+                const day = document.createElement('span');
+                day.className = 'block font-bold capitalize text-slate-800';
+                day.textContent = DAYS_NAMES[index].slice(0, 3);
+                const count = document.createElement('span');
+                count.className = `mt-1 inline-block rounded-full px-1.5 py-0.5 text-[10px] ${doneCount === meals.length ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500'}`;
+                count.textContent = `${doneCount}/5`;
+                th.append(day, count);
+                headerRow.appendChild(th);
+            });
+            head.appendChild(headerRow);
+            table.appendChild(head);
+
+            const body = document.createElement('tbody');
+            meals.forEach(meal => {
+                const row = document.createElement('tr');
+                row.className = 'border-t border-slate-100';
+                const label = document.createElement('th');
+                label.scope = 'row';
+                label.className = 'sticky left-0 z-10 bg-white px-2 py-2 text-left font-medium text-slate-600';
+                label.innerHTML = `<i class="fa-solid ${meal.icon} mr-1 w-3 text-center text-slate-400" aria-hidden="true"></i>${meal.label}`;
+                row.appendChild(label);
+                DAYS_KEYS.forEach(dayKey => {
+                    const isDone = Boolean(weeklyPlan[dayKey]?.meals?.[meal.key]?.completed);
+                    const cell = document.createElement('td');
+                    cell.className = 'px-1 py-1.5';
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.className = `mx-auto flex h-8 w-8 items-center justify-center rounded-lg border transition ${isDone ? 'border-emerald-500 bg-emerald-500 text-white shadow-sm' : 'border-slate-200 bg-slate-50 text-slate-300 hover:border-sky-300'}`;
+                    button.setAttribute('aria-label', `${meal.label}, ${DAYS_NAMES[DAYS_KEYS.indexOf(dayKey)]}: ${isDone ? 'completada' : 'pendiente'}. Editar`);
+                    button.title = isDone ? 'Comida completada; pulsar para editar' : 'Comida pendiente; pulsar para editar';
+                    button.innerHTML = isDone ? '<i class="fa-solid fa-check" aria-hidden="true"></i>' : '<span class="h-2 w-2 rounded-full bg-current" aria-hidden="true"></span>';
+                    button.onclick = () => openEditModal(dayKey, meal.key);
+                    cell.appendChild(button);
+                    row.appendChild(cell);
+                });
+                body.appendChild(row);
+            });
+            table.appendChild(body);
+            const scroller = document.createElement('div');
+            scroller.className = 'overflow-x-auto';
+            scroller.appendChild(table);
+            const hint = document.createElement('p');
+            hint.className = 'border-t border-slate-100 px-3 py-2 text-[10px] text-slate-500';
+            hint.innerHTML = '<i class="fa-solid fa-circle-info mr-1 text-sky-500" aria-hidden="true"></i>Desliza horizontalmente para ver todos los días. Pulsa una marca para editar.';
+            container.replaceChildren(scroller, hint);
+        }
+
+        function autoGenerateWeek() {
+            DAYS_KEYS.forEach((dayKey, idx) => {
+                const comidaIdx = idx % VITALITTY_OPTIONS.comida.length;
+                const cenaIdx = idx % VITALITTY_OPTIONS.cena.length;
+                const mmIdx = idx % VITALITTY_OPTIONS.mediaManana.length;
+                const preIdx = idx % VITALITTY_OPTIONS.preEntreno.length;
+
+                weeklyPlan[dayKey].meals.desayuno.title = VITALITTY_OPTIONS.desayuno[0];
+                weeklyPlan[dayKey].meals.mediaManana.title = VITALITTY_OPTIONS.mediaManana[mmIdx];
+                weeklyPlan[dayKey].meals.comida.title = VITALITTY_OPTIONS.comida[comidaIdx];
+                weeklyPlan[dayKey].meals.preEntreno.title = VITALITTY_OPTIONS.preEntreno[preIdx];
+                weeklyPlan[dayKey].meals.cena.title = VITALITTY_OPTIONS.cena[cenaIdx];
+            });
+
+            savePlan(true);
+            renderWeeklyGrid();
+            renderDailyView();
+            showToast("Menú semanal rotativo Vitalitty generado.");
+        }
+
+        function renderDailyView() {
+            const dayData = weeklyPlan[activeDailyDay] || createEmptyWeekPlan()[activeDailyDay];
+            const dayIndex = DAYS_KEYS.indexOf(activeDailyDay);
+            document.getElementById('selectedDayTitle').innerText = `${DAYS_NAMES[dayIndex]}`;
+
+            const buttonsContainer = document.getElementById('dailyDayButtons');
+            buttonsContainer.innerHTML = '';
+            DAYS_KEYS.forEach((dk, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `px-3 py-1.5 rounded-xl text-xs font-bold transition ${dk === activeDailyDay ? 'bg-sky-600 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`;
+                btn.innerText = DAYS_NAMES[idx].substring(0, 3);
+                btn.onclick = () => {
+                    activeDailyDay = dk;
+                    renderDailyView();
+                };
+                buttonsContainer.appendChild(btn);
+            });
+
+            const waterIntakes = getWaterIntakes(dayData);
+            const waterLiters = Number(dayData.water || 0);
+            const waterList = document.getElementById('waterIntakesList');
+            document.getElementById('waterIntakesCount').textContent = waterIntakes.length;
+            waterList.innerHTML = '';
+            if (waterIntakes.length === 0) {
+                waterList.innerHTML = '<p class="text-xs text-slate-400">Aún no hay tomas registradas.</p>';
+            } else {
+                waterIntakes.forEach((intake, index) => {
+                    const row = document.createElement('div');
+                    row.className = 'flex items-center justify-between gap-2 rounded-lg bg-slate-800/70 px-3 py-2 text-xs';
+                    const amount = document.createElement('span');
+                    amount.className = 'font-semibold text-white';
+                    amount.textContent = `${Number(intake.amount).toLocaleString('es-ES', { maximumFractionDigits: 2 })} L`;
+                    const remove = document.createElement('button');
+                    remove.type = 'button';
+                    remove.className = 'rounded-md px-2 py-1 text-rose-300 hover:bg-rose-500/20 hover:text-rose-200';
+                    remove.setAttribute('aria-label', `Eliminar toma de ${amount.textContent}`);
+                    remove.title = 'Eliminar toma';
+                    remove.innerHTML = '<i class="fa-solid fa-trash-can" aria-hidden="true"></i>';
+                    remove.onclick = () => removeWaterIntake(index);
+                    row.append(amount, remove);
+                    waterList.appendChild(row);
+                });
+            }
+            document.getElementById('waterCountText').innerText = `${waterLiters.toFixed(2)} / ${DAILY_WATER_TARGET_L.toFixed(2)} L`;
+            const pct = Math.min(100, (waterLiters / DAILY_WATER_TARGET_L) * 100);
+            document.getElementById('waterProgressBar').style.width = `${pct}%`;
+
+            let completed = 0;
+
+            const mealsList = document.getElementById('dailyMealsList');
+            mealsList.innerHTML = '';
+
+            const mealTypes = [
+                { key: 'desayuno', label: 'DESAYUNO', icon: 'fa-mug-hot', color: 'text-amber-600', badgeBg: 'bg-amber-100 text-amber-800' },
+                { key: 'mediaManana', label: 'MEDIA MAÑANA', icon: 'fa-sun', color: 'text-orange-500', badgeBg: 'bg-orange-100 text-orange-800' },
+                { key: 'comida', label: 'COMIDA', icon: 'fa-utensils', color: 'text-sky-600', badgeBg: 'bg-sky-100 text-sky-800' },
+                { key: 'preEntreno', label: 'PRE-ENTRENO', icon: 'fa-bolt', color: 'text-amber-500', badgeBg: 'bg-amber-100 text-amber-800' },
+                { key: 'cena', label: 'CENA', icon: 'fa-moon', color: 'text-indigo-600', badgeBg: 'bg-indigo-100 text-indigo-800' }
+            ];
+
+            mealTypes.forEach(mt => {
+                const meal = dayData.meals[mt.key];
+
+                if (meal.completed) {
+                    completed++;
+                }
+
+                const card = document.createElement('div');
+                card.className = `bg-white rounded-2xl p-4 border transition-all duration-200 ${
+                    meal.completed 
+                        ? 'border-emerald-400 bg-emerald-50/30 shadow-sm' 
+                        : 'border-slate-200 shadow-sm'
+                }`;
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between gap-3">
+                        <div class="flex items-center space-x-3.5 flex-grow">
+                            <button onclick="toggleMealComplete('${mt.key}')" class="shrink-0 w-7 h-7 min-w-[1.75rem] min-h-[1.75rem] aspect-square p-0 rounded-xl border-2 flex items-center justify-center transition ${meal.completed ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm' : 'border-slate-300 text-transparent hover:border-emerald-500'}" title="Marcar como completada">
+                                <i class="fa-solid fa-check text-xs"></i>
+                            </button>
+                            <div class="flex-grow">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[10px] font-extrabold tracking-wider ${mt.color} flex items-center gap-1 uppercase">
+                                        <i class="fa-solid ${mt.icon}"></i> ${mt.label}
+                                    </span>
+                                </div>
+                                <h4 class="text-sm font-bold text-slate-900 mt-0.5">
+                                    ${meal.title}
+                                </h4>
+                                ${meal.details ? `<p class="text-xs text-sky-800 bg-sky-50 p-1.5 rounded-lg border border-sky-200/80 mt-1.5 italic"><i class="fa-solid fa-pen-to-square mr-1"></i><strong>Nota:</strong> ${meal.details}</p>` : ''}
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2 shrink-0">
+                            <button onclick="openEditModal('${activeDailyDay}', '${mt.key}')" class="text-xs text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-xl transition flex items-center gap-1.5 font-semibold" title="Editar opción o notas">
+                                <i class="fa-solid fa-pen"></i> <span>Editar</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                mealsList.appendChild(card);
+            });
+
+            document.getElementById('dailyCompletedCount').innerText = `${completed}/5 completadas`;
+        }
+
+        function getActivityLabel(act) {
+            switch(act) {
+                case 'rest': return 'Descanso Total';
+                case 'wod_intense': return 'WOD Intenso';
+                case 'wod_kb': return 'WOD + Accesorio KB';
+                case 'kb_home': return 'Descanso + Accesorio KB';
+                case 'moderate': return 'Moderado';
+                default: return 'Moderado';
+            }
+        }
+
+        function toggleWaterIntakes(open) {
+            const dialog = document.getElementById('waterIntakesDialog');
+            const button = document.getElementById('waterIntakesOpenButton');
+            dialog.classList.toggle('hidden', !open);
+            button.setAttribute('aria-expanded', String(open));
+            if (open) dialog.querySelector('button').focus();
+            else button.focus();
+        }
+
+        function getWaterIntakes(dayData) {
+            if (!Array.isArray(dayData.waterIntakes)) {
+                const legacyTotal = Number(dayData.water || 0);
+                dayData.waterIntakes = legacyTotal > 0 ? [{ amount: legacyTotal, legacy: true }] : [];
+            }
+            return dayData.waterIntakes;
+        }
+
+        function updateWaterTotal(dayData) {
+            dayData.water = Math.round(getWaterIntakes(dayData).reduce((sum, intake) => sum + Number(intake.amount || 0), 0) * 100) / 100;
+        }
+
+        function addWater(amount) {
+            const dayData = weeklyPlan[activeDailyDay];
+            const intakes = getWaterIntakes(dayData);
+            intakes.push({ amount: Number(amount) });
+            updateWaterTotal(dayData);
+            savePlan(true);
+            renderDailyView();
+            renderWeeklyGrid();
+        }
+
+        function removeWaterIntake(index) {
+            const dayData = weeklyPlan[activeDailyDay];
+            const intakes = getWaterIntakes(dayData);
+            if (index < 0 || index >= intakes.length) return;
+            intakes.splice(index, 1);
+            updateWaterTotal(dayData);
+            savePlan(true);
+            renderDailyView();
+            renderWeeklyGrid();
+        }
+
+        function resetWater() {
+            const dayData = weeklyPlan[activeDailyDay];
+            dayData.waterIntakes = [];
+            dayData.water = 0;
+            savePlan(true);
+            renderDailyView();
+            renderWeeklyGrid();
+        }
+
+        function toggleMealComplete(mealType) {
+            const current = weeklyPlan[activeDailyDay].meals[mealType].completed;
+            weeklyPlan[activeDailyDay].meals[mealType].completed = !current;
+            savePlan(true);
+            renderDailyView();
+            renderWeeklyGrid();
+        }
+
+        function goToDailyDay(dayKey) {
+            activeDailyDay = dayKey;
+            switchTab('daily');
+        }
+
+        function openEditModal(dayKey, mealType) {
+            modalState = { day: dayKey, mealType };
+            const mealData = weeklyPlan[dayKey].meals[mealType];
+
+            document.getElementById('modalTitle').innerText = `Editar ${mealType.toUpperCase()} - ${DAYS_NAMES[DAYS_KEYS.indexOf(dayKey)]}`;
+
+            const select = document.getElementById('modalOptionSelect');
+            select.innerHTML = '';
+
+            const availableOptions = VITALITTY_OPTIONS[mealType] || ["Opción Personalizada"];
+            availableOptions.forEach(opt => {
+                const el = document.createElement('option');
+                el.value = opt;
+                el.innerText = opt;
+                if (opt === mealData.title) el.selected = true;
+                select.appendChild(el);
+            });
+
+            document.getElementById('modalTextCustom').value = mealData.details || '';
+            document.getElementById('editMealModal').classList.remove('hidden');
+        }
+
+        function closeEditModal() {
+            document.getElementById('editMealModal').classList.add('hidden');
+        }
+
+        function saveMealFromModal() {
+            const { day, mealType } = modalState;
+            const selectedTitle = document.getElementById('modalOptionSelect').value;
+            const customDetails = document.getElementById('modalTextCustom').value;
+
+            weeklyPlan[day].meals[mealType].title = selectedTitle;
+            weeklyPlan[day].meals[mealType].details = customDetails;
+
+            savePlan(true);
+            closeEditModal();
+            renderWeeklyGrid();
+            renderDailyView();
+            showToast("Comida actualizada.");
+        }
+
+        function renderGuideView() {
+            const summary = document.getElementById('guideSummary');
+            const mealSections = document.getElementById('guideMealSections');
+            if (!summary || !mealSections) return;
+            const profile = nutritionProfile;
+            const proteinList = Array.isArray(profile.proteins) && profile.proteins.length
+                ? `<ul class="mt-2 space-y-1.5">${profile.proteins.map(item => `<li class="flex gap-2 items-start text-xs text-slate-700"><i class="fa-solid fa-circle-check text-sky-500 mt-0.5"></i><span>${escapeHtml(item)}</span></li>`).join('')}</ul>`
+                : '<p class="mt-2 text-xs text-slate-500">No indicado en el PDF</p>';
+            summary.innerHTML = `
+                <article class="rounded-xl p-4 border border-sky-100 bg-sky-50/80">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-sky-800"><i class="fa-solid fa-bullseye mr-1.5"></i>Calorías objetivo</span>
+                    <p class="text-2xl font-black text-sky-700 mt-2">${escapeHtml(profile.calories || 'No indicado')}</p>
+                    <p class="text-xs text-sky-800 mt-1">Por día</p>
+                </article>
+                <article class="rounded-xl p-4 border border-sky-100 bg-sky-50/80">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-sky-800"><i class="fa-solid fa-drumstick-bite mr-1.5"></i>Proteínas por tipo</span>
+                    ${proteinList}
+                </article>
+                <article class="rounded-xl p-4 border border-amber-200 bg-amber-50/80">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-amber-900"><i class="fa-solid fa-wheat-awn mr-1.5"></i>Hidratos de carbono</span>
+                    <p class="text-base font-bold text-amber-900 mt-2">${escapeHtml(profile.carbs || 'No indicado en el PDF')}</p>
+                    <p class="text-xs text-amber-800 mt-1">Cantidad base del plan</p>
+                </article>
+                ${profile.goal ? `<div class="sm:col-span-2 xl:col-span-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 flex gap-3 items-start"><i class="fa-solid fa-arrow-trend-down text-sky-600 mt-0.5"></i><p class="text-sm text-slate-700"><strong class="text-slate-900">Objetivo:</strong> ${escapeHtml(profile.goal)}</p></div>` : ''}`;
+
+            const meals = [
+                {key:'desayuno', title:'Desayuno', subtitle:'Primera comida del día', icon:'fa-mug-hot', color:'bg-amber-50 text-amber-600'},
+                {key:'mediaManana', title:'Media mañana', subtitle:'Tentempié de media mañana', icon:'fa-sun', color:'bg-orange-50 text-orange-600'},
+                {key:'comida', title:'Comida', subtitle:'Opciones principales', icon:'fa-utensils', color:'bg-sky-50 text-sky-600'},
+                {key:'preEntreno', title:'Pre-entreno', subtitle:'Antes de entrenar', icon:'fa-bolt', color:'bg-sky-50 text-sky-600'},
+                {key:'cena', title:'Cena', subtitle:'Opciones para la noche', icon:'fa-moon', color:'bg-indigo-50 text-indigo-600'}
+            ];
+            mealSections.innerHTML = meals.map(meal => {
+                const options = VITALITTY_OPTIONS[meal.key] || [];
+                const entries = options.length ? options.map((option, index) => `
+                    <article class="rounded-xl border border-slate-200 bg-slate-50/70 p-4 flex gap-3 items-start hover:border-sky-200 transition">
+                        <span class="shrink-0 w-7 h-7 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-[11px] font-extrabold text-slate-500">${options.length === 1 ? '<i class="fa-solid fa-check text-sky-600"></i>' : String(index + 1).padStart(2, '0')}</span>
+                        <p class="text-sm leading-relaxed text-slate-700">${escapeHtml(option)}</p>
+                    </article>`).join('')
+                    : '<p class="text-sm text-slate-500">No hay opciones disponibles.</p>';
+                return `<section class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200">
+                    <div class="flex flex-wrap justify-between items-center gap-2 mb-4">
+                        <div class="flex items-center gap-3"><span class="w-10 h-10 rounded-xl ${meal.color} flex items-center justify-center"><i class="fa-solid ${meal.icon} text-lg"></i></span><div><h3 class="font-bold text-slate-900">${meal.title}</h3><p class="text-xs text-slate-500">${meal.subtitle}</p></div></div>
+                        <span class="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">${options.length} ${options.length === 1 ? 'opción' : 'opciones'}</span>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-2.5">${entries}</div>
+                </section>`;
+            }).join('');
+
+        }
+
+        function exportJSONData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(weeklyPlan, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `Vitalitty_Plan_${currentWeekKey}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+            showToast("Backup JSON descargado.");
+        }
+
+        function openSyncModal() {
+            document.getElementById('jsonbinIdInput').value = getJsonbinId();
+            document.getElementById('jsonbinKeyInput').value = getJsonbinKey();
+            document.getElementById('syncModal').classList.remove('hidden');
+        }
+
+        function closeSyncModal() {
+            document.getElementById('syncModal').classList.add('hidden');
+        }
+
+        async function saveSyncCodeFromModal() {
+            const id = document.getElementById('jsonbinIdInput').value;
+            const key = document.getElementById('jsonbinKeyInput').value;
+            setJsonbinId(id);
+            setJsonbinKey(key);
+
+            if (id) {
+                showToast("Configuración guardada. Sincronizando...");
+                await pushDataToCloud(weeklyPlan, true);
+            } else {
+                showToast("Configuración guardada en modo local.");
+            }
+            closeSyncModal();
+        }
+
+        function switchTab(tabId) {
+            const tabs = ['daily', 'weekly', 'diet-guide'];
+            tabs.forEach(t => {
+                const view = document.getElementById(`view-${t}`);
+                const tab = document.getElementById(`tab-${t}`);
+                if (view) view.classList.add('hidden');
+                if (tab) tab.classList.remove('tab-active');
+            });
+
+            const activeView = document.getElementById(`view-${tabId}`);
+            const activeTab = document.getElementById(`tab-${tabId}`);
+            if (activeView) activeView.classList.remove('hidden');
+            if (activeTab) activeTab.classList.add('tab-active');
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3500);
+        }
+
+        window.onload = function() {
+            initApp();
+        };
+    </script>
+</body>
+</html>
